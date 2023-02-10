@@ -21,6 +21,7 @@ app.get("/users", async (req, res) => {
     console.log(error);
   }
 });
+
 app.post("/users", async (req, res) => {
   try {
     const {
@@ -47,6 +48,27 @@ app.post("/users", async (req, res) => {
     console.log(error);
   }
 });
+
+app.put("/user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { name, img, password, department, leavestatus, isadmin, passreset } =
+      req.body.body;
+
+    const user = await pool.query(
+      "UPDATE employee SET name=$1, img=$2, password=$3, department=$4, leavestatus=$5, isadmin=$6, passreset=$7 WHERE email=$8 RETURNING *",
+      [name, img, password, department, leavestatus, isadmin, passreset, email]
+    );
+
+    res.status(201).json({
+      message: `success`,
+      data: user.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`App listening on ${port}`);
 });
