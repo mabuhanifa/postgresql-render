@@ -22,6 +22,8 @@ app.get("/users", async (req, res) => {
   }
 });
 
+
+// creating employee
 app.post("/users", async (req, res) => {
   try {
     const {
@@ -49,6 +51,7 @@ app.post("/users", async (req, res) => {
   }
 });
 
+// updating employee
 app.put("/user/:email", async (req, res) => {
   try {
     const { email } = req.params;
